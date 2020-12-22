@@ -51,7 +51,7 @@ checkVersionsUniform prj | null (prjPackages prj) = Left ["Error reading cabal f
 checkVersionsUniform prj = do
     let (errors, names) = F.foldl' collectConfig mempty prj
     if not (null errors)
-    then Left errors
+    then Left $ init errors ++ [ last errors ++ "\n(Consider option --jobs-selection any)" ]
     else Right (allVersions, prj { prjPackages = names, prjOptPackages = [] })
   where
     allVersions :: S.Set CompilerVersion
@@ -72,7 +72,8 @@ checkVersionsUniform prj = do
                | otherwise = pure $ mconcat
                     [ pkgName pkg
                     , " is missing tested-with annotations for: "
-                    ] ++ intercalate "," missingVersions
+                    , intercalate ", " missingVersions
+                    ]
 
 checkVersionsAny
     :: Project a b Package

@@ -104,10 +104,12 @@ cabalGoldenTest name outRef act = goldenTest name readGolden (transform <$> act)
 
     upd (packData -> contents) = BS.writeFile outRef contents
 
-    cmp x y | x == y = return Nothing
-    cmp out1 out2 = return . Just . mconcat $
-        [ diff out1 out2
-        ]
+    cmp :: [String] -> [String] -> IO (Maybe String)
+    cmp x y = return $ if out1 == out2 then Nothing else Just $ diff out1 out2
+      where
+      norm = lines . unlines
+      out1 = norm x
+      out2 = norm y
 
     diff x y =
         ansiReset -- reset tasty's red color
