@@ -69,7 +69,7 @@ githubHeader insertVersion argv =
     , ""
     , "  haskell-ci regenerate"
     , ""
-    , "For more information, see https://github.com/haskell-CI/haskell-ci"
+    , "For more information, see https://github.com/andreasabel/haskell-ci"
     , ""
     ] ++
     verlines ++
@@ -374,7 +374,8 @@ makeGitHub _argv config@Config {..} gitconfig prj jobs@JobVersions {..} = do
             , ("path", "~/.haskell-ci-tools")
             ]
 
-        githubUses "checkout" "actions/checkout@v3" $ buildList $ do
+        let actionsCheckout = "actions/checkout@v" ++ if cfgUbuntu >= Focal then "4" else "3"
+        githubUses "checkout" actionsCheckout $ buildList $ do
             item ("path", "source")
             when cfgSubmodules $
                 item ("submodules", "true")
