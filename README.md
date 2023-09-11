@@ -1,9 +1,18 @@
 Note: this is a fork of https://github.com/haskell-CI/haskell-ci, rebased on the original.
 
 Change(s) in this fork:
+
 - Use `.0` for GHC prereleases instead of `.1`.
   E.g. here you declare `tested-with: GHC == 9.8.0` to get CI for a prerelease of GHC 9.8.
   In the original, you declare `tested-with: GHC == 9.8.1`.
+  See: https://github.com/haskell-CI/haskell-ci/issues/631
+
+- Default distribution is `focal` instead of `bionic`.
+  So, consistently only GHC 7.10.3 and up are supported.
+  See: https://github.com/haskell-CI/haskell-ci/issues/628.
+
+Full change set at: https://github.com/haskell-CI/haskell-ci/compare/master...andreasabel:haskell-ci:master
+
 
 haskell-ci - CI generator for multiple [GHC](http://haskell.org/ghc) versions
 =============================================================================

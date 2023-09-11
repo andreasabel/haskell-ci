@@ -374,7 +374,8 @@ makeGitHub _argv config@Config {..} gitconfig prj jobs@JobVersions {..} = do
             , ("path", "~/.haskell-ci-tools")
             ]
 
-        githubUses "checkout" "actions/checkout@v3" $ buildList $ do
+        let actionsCheckout = "actions/checkout@v" ++ if cfgUbuntu >= Focal then "4" else "3"
+        githubUses "checkout" actionsCheckout $ buildList $ do
             item ("path", "source")
             when cfgSubmodules $
                 item ("submodules", "true")
