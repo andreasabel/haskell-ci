@@ -12,6 +12,9 @@ Change(s) in this fork:
   So, consistently only GHC 7.10.3 and up are supported.
   See: https://github.com/haskell-CI/haskell-ci/issues/628.
 
+- Default install method is `ghcup` rather than `hvr-ppa`.
+  See: https://github.com/haskell-CI/haskell-ci/pull/685
+
 Full change set at: https://github.com/haskell-CI/haskell-ci/compare/master...andreasabel:haskell-ci:master
 
 
