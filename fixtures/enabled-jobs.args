@@ -1,1 +1,2 @@
 --enabled-jobs=>=8
+--distribution=bionic
