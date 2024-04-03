@@ -69,7 +69,7 @@ githubHeader insertVersion argv =
     , ""
     , "  haskell-ci regenerate"
     , ""
-    , "For more information, see https://github.com/haskell-CI/haskell-ci"
+    , "For more information, see https://github.com/andreasabel/haskell-ci"
     , ""
     ] ++
     verlines ++
@@ -311,7 +311,7 @@ makeGitHub _argv config@Config {..} gitconfig prj jobs@JobVersions {..} = do
                 Binary.put cfgHLint
                 Binary.put cfgGhcupJobs -- GHC location affects doctest, e.g
 
-        when (doctestEnabled || cfgHLintEnabled cfgHLint) $ githubUses "cache (tools)" "actions/cache/restore@v3"
+        when (doctestEnabled || cfgHLintEnabled cfgHLint) $ githubUses "cache (tools)" (actionV3Or4 "actions/cache/restore")
             [ ("key", "${{ runner.os }}-${{ matrix.compiler }}-tools-" ++ toolsConfigHash)
             , ("path", "~/.haskell-ci-tools")
             ]
@@ -377,7 +377,7 @@ makeGitHub _argv config@Config {..} gitconfig prj jobs@JobVersions {..} = do
             , ("path", "~/.haskell-ci-tools")
             ]
 
-        githubUses "checkout" "actions/checkout@v3" $ buildList $ do
+        githubUses "checkout" (actionV3Or4 "actions/checkout") $ buildList $ do
             item ("path", "source")
             when cfgSubmodules $
                 item ("submodules", "true")
@@ -468,7 +468,7 @@ makeGitHub _argv config@Config {..} gitconfig prj jobs@JobVersions {..} = do
 
         -- This a hack. https://github.com/actions/cache/issues/109
         -- Hashing Java - Maven style.
-        githubUses "restore cache" "actions/cache/restore@v3"
+        githubUses "restore cache" (actionV3Or4 "actions/cache/restore")
             [ ("key", "${{ runner.os }}-${{ matrix.compiler }}-${{ github.sha }}")
             , ("restore-keys", "${{ runner.os }}-${{ matrix.compiler }}-")
             , ("path", "~/.cabal/store")
@@ -612,7 +612,7 @@ makeGitHub _argv config@Config {..} gitconfig prj jobs@JobVersions {..} = do
             when (csHaddock cs) $
                 sh_cs $ "$CABAL v2-haddock --disable-documentation" ++ haddockFlags ++ " $ARG_COMPILER " ++ withHaddock ++ " " ++ allFlags ++ " all"
 
-        githubUsesIf "save cache" "actions/cache/save@v3" "always()"
+        githubUsesIf "save cache" (actionV3Or4 "actions/cache/save") "always()"
           [ ("key", "${{ runner.os }}-${{ matrix.compiler }}-${{ github.sha }}")
           , ("path", "~/.cabal/store")
           ]
@@ -709,6 +709,10 @@ makeGitHub _argv config@Config {..} gitconfig prj jobs@JobVersions {..} = do
     githubUsesIf :: String -> String -> String -> [(String, String)] -> ListBuilder (Either HsCiError GitHubStep) ()
     githubUsesIf name action if_ with = item $ return $
         GitHubStep name $ Right $ GitHubUses action (Just if_) (Map.fromList with)
+
+    -- Some actions are v3 at node16 and v4 at node20 (the latter needs ubuntu 20.04 or higher).
+    actionV3Or4 :: String -> String
+    actionV3Or4 a = a ++ if cfgUbuntu >= Focal then "@v4" else "@v3"
 
     -- shell primitives
     echo_to' :: FilePath -> String -> String
