@@ -1,3 +1,22 @@
+Note: this is a fork of https://github.com/haskell-CI/haskell-ci, rebased on the original.
+
+Change(s) in this fork:
+
+1. Default install method is `ghcup` rather than `hvr-ppa`.
+   See: https://github.com/haskell-CI/haskell-ci/pull/685
+
+2. Use `.0` for GHC prereleases instead of `.1`.
+   E.g. here you declare `tested-with: GHC == 9.8.0` to get CI for a prerelease of GHC 9.8.
+   In the original, you declare `tested-with: GHC == 9.8.1`.
+   See: https://github.com/haskell-CI/haskell-ci/issues/631
+
+   Note: After a release of GHC, support for prereleases is dropped even from this fork of `haskell-ci`.
+
+3. Use latest Cabal (3.10.3).
+
+Full change set at: https://github.com/haskell-CI/haskell-ci/compare/master...andreasabel:haskell-ci:master
+
+
 haskell-ci - CI generator for multiple [GHC](http://haskell.org/ghc) versions
 =============================================================================
 
@@ -38,7 +57,7 @@ and `cabal-install`.
     tested-with: GHC ==9.6.3 || ==9.4.8 || ==9.2.8
     ...
     ```
-    
+
     Add as many or as few GHC versions to test as you want.
 
 * Step 4: Generate a workflow file for your project:
@@ -62,7 +81,7 @@ and `cabal-install`.
 * Step 5: Create a pull request with your new CI configuration.
 
     ... or push directly to your main branch if you feel lucky.
-    
+
     Sometimes you may need to regenerate CI script, for example, when
     adding new compiler version to `tested-with`.
     You may simply run `haskell-ci regenerate`.
