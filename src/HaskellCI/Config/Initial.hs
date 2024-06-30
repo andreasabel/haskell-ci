@@ -64,7 +64,7 @@ initialConfig = Config
     , cfgGhcupCabal          = True
     , cfgSetupMethods = PerSetupMethod
         { hvrPpa          = noVersion
-        , ghcup           = C.unionVersionRanges (C.intersectVersionRanges (C.laterVersion (mkVersion [8,10,4])) (C.earlierVersion (mkVersion [9]))) (C.laterVersion (mkVersion [9,0,1]))
+        , ghcup           = ghcupVersions
         , ghcupVanilla    = noVersion -- TODO -- include GHC-9.8.3
         , ghcupPrerelease = C.orLaterVersion (mkVersion ([9,11,0]))
         }
@@ -83,3 +83,14 @@ initialConfig = Config
     , cfgTimeoutMinutes      = 60
     , cfgVersionMapping      = mempty
     }
+  where
+    -- Versions supported by GHCup.
+    -- As of 2023-10-12, GHCup supports all minor versions of GHC 8.4 and up
+    -- and the latest minor versions of 8.2, 8.0, and 7.10.
+    -- However, GH 7.10.3 has problems when installed with GHCup, so we don't include it here.
+    ghcupVersions :: C.VersionRange
+    ghcupVersions = foldr1 C.unionVersionRanges
+      [ C.laterVersion $ mkVersion [8,4,1]
+      , C.thisVersion  $ mkVersion [8,2,2]
+      , C.thisVersion  $ mkVersion [8,0,2]
+      ]

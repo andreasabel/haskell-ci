@@ -39,7 +39,7 @@ configHistory =
             , ghcupVanilla    = C.withinVersion (C.mkVersion [9,8,3])
             , ghcupPrerelease = C.orLaterVersion (C.mkVersion [9,12,0])
             }
-    , ver 0 19 2024114 := \cfg -> cfg
+    , ver 0 19 20241114 := \cfg -> cfg
         & field @"cfgSetupMethods" .~ PerSetupMethod
             { hvrPpa          = C.noVersion
             , ghcup           = invertVersionRange (C.withinVersion (C.mkVersion [9,8,3])) /\ C.earlierVersion (C.mkVersion [9,12])
@@ -47,7 +47,9 @@ configHistory =
             , ghcupPrerelease = C.orLaterVersion (C.mkVersion [9,12])
             }
     , ver 0 19 20241117 := \cfg -> cfg
-        & field @"cfgVersionMapping" .~ Map.singleton (mkVersion [9,12,1]) (mkVersion [9,12,0,20241031])
+        & field @"cfgVersionMapping" .~ Map.singleton (mkVersion [9,12,0]) (mkVersion [9,12,0,20241031])
+    , ver 0 19 20241119 := \cfg -> cfg
+        & field @"cfgVersionMapping" .~ Map.singleton (mkVersion [9,12,0]) (mkVersion [9,12,0,20241114])
     ]
   where
     ver x y z = [x, y, z]
