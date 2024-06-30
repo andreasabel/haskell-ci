@@ -35,6 +35,7 @@ tested-with:
    || ==9.8.2
    || ==9.8.3
    || ==9.10.1
+   || ==9.12.0
 
 extra-source-files:
   Changelog.md
