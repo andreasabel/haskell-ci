@@ -1,8 +1,8 @@
 -- Most settings can be given as command line arguments
 -- Config file is convenient if you maintain large amount of packages
 
--- Supported: xenial, bionic, focal.
--- Bionic is a default.
+-- Supported: xenial, bionic, focal, jammy.
+-- jammy is the default.
 distribution: jammy
 
 -- list of extra apt packages to be installed

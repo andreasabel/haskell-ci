@@ -69,7 +69,7 @@ githubHeader insertVersion argv =
     , ""
     , "  haskell-ci regenerate"
     , ""
-    , "For more information, see https://github.com/haskell-CI/haskell-ci"
+    , "For more information, see https://github.com/andreasabel/haskell-ci"
     , ""
     ] ++
     verlines ++

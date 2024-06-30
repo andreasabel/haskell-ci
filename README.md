@@ -1,3 +1,20 @@
+Note: this is a fork of https://github.com/haskell-CI/haskell-ci, rebased on the original.
+
+Change(s) in this fork:
+
+1. Default install method is `ghcup` rather than `hvr-ppa`.
+   See: https://github.com/haskell-CI/haskell-ci/pull/685
+
+2. Use `.0` for GHC prereleases instead of `.1`.
+   E.g. here you declare `tested-with: GHC == 9.10.0` to get CI for a prerelease of GHC 9.10.
+   In the original, you declare `tested-with: GHC == 9.10.1`.
+   See: https://github.com/haskell-CI/haskell-ci/issues/631
+
+   Note: After a release of GHC, support for prereleases is dropped even from this fork of `haskell-ci`.
+
+Full change set at: https://github.com/haskell-CI/haskell-ci/compare/master...andreasabel:haskell-ci:master
+
+
 haskell-ci - CI generator for multiple [GHC](http://haskell.org/ghc) versions
 =============================================================================
 
