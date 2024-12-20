@@ -47,15 +47,16 @@ configHistory =
             , ghcupPrerelease = C.orLaterVersion (C.mkVersion [9,12])
             }
     , ver 0 19 20241117 := \cfg -> cfg
-        & field @"cfgVersionMapping" .~ Map.singleton (mkVersion [9,12,1]) (mkVersion [9,12,0,20241031])
+        & field @"cfgVersionMapping" .~ Map.singleton (mkVersion [9,12,0]) (mkVersion [9,12,0,20241031])
     , ver 0 19 20241121 := \cfg -> cfg
-        & field @"cfgVersionMapping" .~ Map.singleton (mkVersion [9,12,1]) (mkVersion [9,12,0,20241114])
+        & field @"cfgVersionMapping" .~ Map.singleton (mkVersion [9,12,0]) (mkVersion [9,12,0,20241114])
     , ver 0 19 20241202 := \cfg -> cfg
-        & field @"cfgVersionMapping" .~ Map.singleton (mkVersion [9,12,1]) (mkVersion [9,12,0,20241128])
+        & field @"cfgVersionMapping" .~ Map.singleton (mkVersion [9,12,0]) (mkVersion [9,12,0,20241128])
     , ver 0 19 20241218 := \cfg -> cfg
         & field @"cfgCabalInstallVersion" ?~ C.mkVersion [3,15,0,0,2024,10,3]
-    , ver 0 19 20241202 := \cfg -> cfg
-        & field @"cfgVersionMapping" .~ mempty
+    , ver 0 19 20241219 := \cfg -> cfg
+        -- Andreas, 2024-12-20, keep 9.12.0
+        -- & field @"cfgVersionMapping" .~ mempty
         & field @"cfgSetupMethods" .~ PerSetupMethod
             { hvrPpa          = C.noVersion
             , ghcup           = invertVersionRange (C.withinVersion (C.mkVersion [9,8,3]))

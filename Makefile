@@ -1,10 +1,10 @@
-HC ?= ghc-9.8.2
+HC ?= ghc-9.10.1
 
 build :
 	cabal v2-build -w $(HC)
 
 self-test :
-	cabal v2-run -w $(HC) haskell-ci -- --config=cabal.haskell-ci haskell-ci.cabal
+	cabal v2-run -w $(HC) haskell-ci github -- --config=cabal.haskell-ci cabal.project
 
 ghcid :
 	ghcid -c 'cabal v2-repl -w $(HC)'
